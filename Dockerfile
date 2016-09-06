@@ -14,6 +14,8 @@
 
 FROM alpine
 
+RUN apk add --no-cache git
+
 ARG BUILD_REPO=PokemonGoF/PokemonGo-Bot
 ARG BUILD_BRANCH=master
 
@@ -21,6 +23,9 @@ LABEL build_repo=$BUILD_REPO build_branch=$BUILD_BRANCH
 
 WORKDIR /usr/src/app
 VOLUME ["/usr/src/app/configs", "/usr/src/app/web"]
+
+RUN git submodule init
+RUN git submodule update
 
 RUN apk -U --no-cache add python py-pip tzdata \
     && rm -rf /var/cache/apk/* \
